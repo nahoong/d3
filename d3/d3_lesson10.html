@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>D3 tutorial</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+
+
+  <script>
+
+    d3.csv("ages.csv", function (data) {
+
+      var width = 500,
+          height = 500,
+          padding = 50;
+
+
+      var map = data.map(function (i) { return parseInt(i.age); })  //csv always be string so parseInt
+
+
+
+      var histogram = d3.layout.histogram()
+          .bins(5)
+          (map);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(histogram.map(function (i) { return i.length; }))])
+          .range([0, height]);
+
+      var x = d3.scale.linear()
+          .domain([0, d3.max(map)])
+          .range([0, width]);
+
+
+      var canvas = d3.select("body").append("svg")
+              .attr("width", width)
+              .attr("height", height + padding);
+
+      var bars = canvas.selectAll(".bar")
+          .data(histogram)
+          .enter()
+          .append("g")
+
+      bars.append("rect")
+          .attr("x", function (d) { return x(d.x); })
+          .attr("y", function (d) { return 500 - y(d.y); })
+          .attr("width", function (d) { return x(d.dx); })
+          .attr("height", function (d) { return y(d.y); })
+          .attr("fill", "steelblue");
+
+      console.log(histogram)
+
+
+    })
+
+  </script>
+
+
+
+</body>
+
+
+</html>

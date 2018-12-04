@@ -1,0 +1,10 @@
+{
+	"head": {
+		"vars": [ "country", "year", "gdp" ]
+	}, 
+	"results": {
+		"bindings": [
+			
+		]
+	}
+}
